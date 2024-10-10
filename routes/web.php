@@ -13,10 +13,6 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
 
     Route::get('/users/{user}', [MessageController::class, 'loadMessagesByUser'])->name('chat.user');
     Route::get('/groups/{group}', [MessageController::class, 'loadMessagesByGroup'])->name('chat.group');
-
-    Route::post('/message', [MessageController::class, 'store'])->name('message.store');
-    Route::delete('/message/{message}', [MessageController::class, 'destroy'])->name('message.destroy');
-    Route::get('/message/older/{message}', [MessageController::class, 'loadOlder'])->name('message.loadOlder');
 });
 
 
