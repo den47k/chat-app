@@ -50,14 +50,24 @@ class MainChatArea extends Component
 
     public function userMessageSent($event)
     {
-        $this->messages->push(Message::find($event['id']));
-        $this->dispatch('scroll-bottom');
+        $message = Message::find($event['id']);
+
+        // Ensure $this->user is not null and check by user ID
+        if ($this->user && $this->user->id === $message->sender_id) {
+            $this->messages->push($message);
+            $this->dispatch('scroll-bottom');
+        }
     }
 
     public function groupMessageSent($event)
     {
-        $this->messages->push(Message::find($event['id']));
-        $this->dispatch('scroll-bottom');
+        $message = Message::find($event['id']);
+
+        // Ensure $this->group is not null and check by group ID
+        if ($this->group && $this->group->id === $message->group_id) {
+            $this->messages->push($message);
+            $this->dispatch('scroll-bottom');
+        }
     }
 
     public function store()

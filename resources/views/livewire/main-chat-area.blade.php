@@ -103,40 +103,16 @@ x-init="
     <!-- Chat Messages -->
     {{-- <div id="chat-messages"
         class="flex-1 overflow-y-auto space-y-4 p-4 h-[calc(100vh-200px)] scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-900"> --}}
-    <div id="chat-messages" x-ref="conversationElement"
+        <div id="chat-messages" x-ref="conversationElement"
         class="flex-1 overflow-y-auto space-y-4 p-4 h-[calc(100vh-200px)] scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-900">
         @isset($messages)
             @foreach ($messages as $message)
                 @if ($message->sender->id === Auth::id())
-                    <!-- Authenticated User Messages -->
-                    <div class="flex justify-end">
-                        <div class="flex items-start space-x-3">
-                            <div>
-                                <div class="bg-gray-500 p-3 rounded-lg text-white">
-                                    <p>{{ $message->message }}</p>
-                                </div>
-                                <span class="text-gray-400 text-sm">{{ $message->created_at->format('H:i') }}</span>
-                            </div>
-                            <div class="flex-shrink-0">
-                                <img class="h-10 w-10 rounded-full object-cover"
-                                    src="{{ $message->sender->profile_photo_url }}" alt="{{ $message->sender->name }}" />
-                            </div>
-                        </div>
-                    </div>
+                    <x-chat.auth-message-card :message="$message"/>
+                    {{-- @include('components.auth-message-card', ['message' => $message]) --}}
                 @else
-                    <!-- Other Users' Messages -->
-                    <div class="flex items-start space-x-3">
-                        <div class="flex-shrink-0">
-                            <img class="h-10 w-10 rounded-full object-cover"
-                                src="{{ $message->sender->profile_photo_url }}" alt="{{ $message->sender->name }}" />
-                        </div>
-                        <div>
-                            <div class="bg-gray-700 p-3 rounded-lg">
-                                <p class="text-white">{{ $message->message }}</p>
-                            </div>
-                            <span class="text-gray-400 text-sm">{{ $message->created_at->format('H:i') }}</span>
-                        </div>
-                    </div>
+                    <x-chat.other-message-card :message="$message"/>
+                    {{-- @include('components.other-message-card', ['message' => $message]) --}}
                 @endif
             @endforeach
         @endisset
