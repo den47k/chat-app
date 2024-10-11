@@ -7,9 +7,6 @@ use App\Http\Controllers\MessageController;
 
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
-    Route::get('/dashboard', function () {
-            return view('dashboard');
-        });
 
     Route::get('/users/{user}', [MessageController::class, 'loadMessagesByUser'])->name('chat.user');
     Route::get('/groups/{group}', [MessageController::class, 'loadMessagesByGroup'])->name('chat.group');
