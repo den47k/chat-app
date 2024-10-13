@@ -96,4 +96,10 @@ class User extends Authenticatable implements MustVerifyEmail
             'last_message_date' => $this->last_message_date,
         ];
     }
+
+    public static function getNotApprovedUsers() {
+        return self::where('is_approved', false)
+            ->whereNotNull('email_verified_at')
+            ->get();
+    }
 }

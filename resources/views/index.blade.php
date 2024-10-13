@@ -75,5 +75,9 @@
                 </x-dropdown>
             </div>
         </div>
+
+        @can('accessAdminPanel', auth()->user())
+            <a href="admin">Admin</a>
+        @endcan
     @endif
 @endsection
